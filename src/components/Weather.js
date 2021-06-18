@@ -8,7 +8,7 @@ class Weather extends react.Component {
     constructor(props) {
         super(props);
         this.state = {
-            result: [],
+            allWeatherResult: [],
             displayWeather: false,
             errorMessage: false
         }
@@ -20,15 +20,14 @@ class Weather extends react.Component {
 
     getWeather = async () => {
         console.log('inside function');
-        let serverRoute = process.env.MY_HEROUKO;
-        console.log("🚀 ~ file: Weather.js ~ line 24 ~ Weather ~ getWeather= ~ serverRoute", serverRoute)
-        const resultArray = await axios.get(`http://localhost:3001/weather?city=${this.props.city}`)
-
+        let weatherUrl = `http://localhost:3001/weather?lon=${this.props.city.lon}&lat=${this.props.city.lat}`
+        const resultArray = await axios.get(weatherUrl)
+        
         this.setState({
             displayWeather: true,
-            result: resultArray.data
+            allWeatherResult: resultArray.data
         })
-        console.log(this.state.result);
+        console.log('******************************************',this.state.allWeatherResult);
     }
 
 
@@ -43,32 +42,23 @@ class Weather extends react.Component {
                         <thead>
                             <tr>
                                 <th>City</th>
-                                <th>{this.props.city}</th>
+                                <th>{this.props.city.display_name}</th>
                             </tr>
                         </thead>
                         <tbody>
+                        {this.state.allWeatherResult.map((e)=>{
+                            console.log("🚀 ~ file: Weather.js ~ line 52 ~ Weather ~ {this.state.allWeatherResult.forEach ~ e", e)
+                            return (
                             <tr>
-                                <td>Description</td>
-                                <td>{this.state.result.description}</td>
+                                   <td>Description</td>
+                                <td>{e.description}</td>
                             </tr>
-                            <tr>
-                                <td>Solar Radiation</td>
-                                <td>{this.state.result.solarRad}</td>
-                            </tr>
-                            <tr>
-                                <td>Temperature</td>
-                                <td>{this.state.result.temp}</td>
-                            </tr>
-                            <tr>
-                                <td>Wind Direction</td>
-                                <td>{this.state.result.windDir}</td>
-                            </tr>
-                            <tr>
-                                <td>Wind Speed</td>
-                                <td>{this.state.result.windSpd}</td>
-                            </tr>
+                                )
+                                
+                            })}
                         </tbody>
                     </Table>
+
                 }
 
                 {this.state.errorMessage &&

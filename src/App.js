@@ -26,7 +26,7 @@ class App extends react.Component {
     e.preventDefault();
 
 
-    let url = `https://eu1.locationiq.com/v1/search.php?key=pk.8b89beb044f7bff265b36ceb931a413c&q=${this.state.city}&format=json`;
+    let url = `https://eu1.locationiq.com/v1/search.php?key=1045814f080fe5&q=${this.state.city}&format=json`;
 
     try {
       let result = await axios.get(url);
@@ -74,7 +74,7 @@ class App extends react.Component {
         }
 
         {this.state.displayMap &&
-          <Weather city={this.state.city} displayMap={this.state.displayMap}></Weather>
+          <Weather city={this.state.result} displayMap={this.state.displayMap}></Weather>
         }
         {this.state.displayMap &&
           <Movies city={this.state.city} displayMap={this.state.displayMap}></Movies>
