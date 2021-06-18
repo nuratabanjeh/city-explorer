@@ -19,8 +19,9 @@ class Movies extends react.Component {
 
     getMovies = async () => {
         console.log('inside function');
-        let serverRoute = process.env.MY_HEROUKO;
-        const resultArray = await axios.get(`http://localhost:3001/movies?city=${this.props.city}`)
+        // let serverRoute = process.env.MY_HEROUKO;
+        const resultArray = await axios.get(`http://localhost:3001/movies?desired_city=${this.props.city}`)
+        console.log("🚀 ~ file: movies.js ~ line 24 ~ Movies ~ getMovies= ~ resultArray", resultArray)
 
         this.setState({
             displayMovies: true,
@@ -39,7 +40,7 @@ class Movies extends react.Component {
                 {this.state.result.map((movie, idx) => {
                     return (
                         <Card style={{ width: '18rem' }}>
-                            <Card.Img variant="top" src={movie.image_url} key={idx} />
+                            <Card.Img variant="top" src={movie.image_url} key={movie.title} />
                             <Card.Body>
                                 <Card.Title>{movie.title}</Card.Title>
                                 <Card.Text>
